@@ -1,0 +1,1 @@
+{"dependencies":{"dotenv":"^16.4.5","express":"^4.19.2","mongoose":"^8.5.1"},"description":"Simple beginner-friendly Campus Lost and Found app - HTML/CSS/JS + Express + MongoDB","main":"server.js","name":"campus-lost-and-found","scripts":{"dev":"node --watch server.js","start":"node server.js"},"version":"1.0.0"}

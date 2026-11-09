@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--
+  Campus Lost and Found — index.html
+  ---------------------------------------------------------------
+  This is the ONLY page of the app (single-page design).
+  Structure:
+    1. <header>  — top navigation bar
+    2. Hero      — title + short intro + live counts
+    3. <main>    — left: report form | right: filters + item cards
+    4. <footer>  — small closing line
+  Styling lives in style.css, all behaviour lives in script.js.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Makes the layout responsive on phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Lost and Found</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ 1. NAVIGATION BAR ============ -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <!-- Inline SVG logo (no emoji, no external image needed) -->
+      <a class="brand" href="/">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>Campus <strong>Lost &amp; Found</strong></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#report">Report an item</a>
+        <a href="#items">Browse items</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ 2. HERO ============ -->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Student help desk</p>
+      <h1>Lost something on campus?<br />Someone may have found it.</h1>
+      <p class="hero-text">Report a lost or found item in under a minute. Every report is saved in the database, so it stays here even after you refresh the page.</p>
+      <!-- Live counts — filled in by script.js after fetching from the API -->
+      <div class="stats" aria-live="polite">
+        <div class="stat"><span id="countTotal">–</span><small>Total reports</small></div>
+        <div class="stat"><span id="countLost">–</span><small>Lost</small></div>
+        <div class="stat"><span id="countFound">–</span><small>Found</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. MAIN CONTENT ============ -->
+  <main class="container layout">
+
+    <!-- ---- 3a. REPORT FORM ---- -->
+    <section class="panel" id="report">
+      <h2>Report an item</h2>
+      <p class="panel-sub">Fill all fields. Be specific — “Black wallet, library 2nd floor” helps the owner find it faster.</p>
+
+      <!-- Success / error banner — hidden until script.js shows it -->
+      <div id="message" class="message" role="status" hidden></div>
+
+      <form id="itemForm" novalidate>
+        <label for="name">Item name *</label>
+        <input id="name" name="name" type="text" placeholder="e.g. Blue water bottle" maxlength="80" required />
+
+        <label for="description">Description *</label>
+        <textarea id="description" name="description" rows="3" placeholder="Colour, brand, any marks…" maxlength="500" required></textarea>
+
+        <label for="location">Location *</label>
+        <input id="location" name="location" type="text" placeholder="e.g. Library, Block B" maxlength="120" required />
+
+        <div class="row">
+          <div>
+            <label for="date">Date *</label>
+            <input id="date" name="date" type="date" required />
+          </div>
+          <div>
+            <label for="status">Status *</label>
+            <select id="status" name="status" required>
+              <option value="Lost">Lost</option>
+              <option value="Found">Found</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-primary">Submit report</button>
+        <p class="hint">* Required fields</p>
+      </form>
+    </section>
+
+    <!-- ---- 3b. ITEM LIST ---- -->
+    <section id="items">
+      <div class="list-head">
+        <h2>Reported items</h2>
+        <!-- Filter buttons — data-filter is read by script.js -->
+        <div class="filters" role="group" aria-label="Filter items">
+          <button class="filter-btn active" data-filter="All">All</button>
+          <button class="filter-btn" data-filter="Lost">Lost</button>
+          <button class="filter-btn" data-filter="Found">Found</button>
+        </div>
+      </div>
+
+      <!-- Search (client-side, filters the already-loaded cards) -->
+      <input id="search" type="search" placeholder="Search by name, description or location…" aria-label="Search items" />
+
+      <!-- States: loading / empty / error are rendered here by script.js -->
+      <div id="itemsGrid" class="grid"></div>
+      <p id="listState" class="list-state">Loading items…</p>
+    </section>
+  </main>
+
+  <!-- ============ 4. FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">Campus Lost and Found — a small project built with HTML, CSS, JavaScript, Node.js, Express &amp; MongoDB.</div>
+  </footer>
+
+  <!-- Behaviour loads last, after the HTML above exists -->
+  <script src="script.js"></script>
+</body>
+</html>
